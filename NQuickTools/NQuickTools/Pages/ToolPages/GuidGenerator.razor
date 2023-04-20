@@ -1,0 +1,73 @@
+﻿@page "/tools/f6baac39"
+
+<PageTitle>Guid Generator</PageTitle>
+
+<MudText Typo="Typo.h1" GutterBottom="true">Guid Generator</MudText>
+
+<MudButton 
+    Color="Color.Primary" 
+    Variant="Variant.Filled" 
+    @onclick="GenerateNewGuid">
+    New Guid
+</MudButton>
+
+<MudText Typo="Typo.h4">
+    Lower Cases
+</MudText>
+<MudText Class="mb-4">
+    N: @guid.ToString("N")
+</MudText>
+<MudText Class="mb-4">
+    D: @guid.ToString("D")
+</MudText>
+<MudText Class="mb-4">
+    B: @guid.ToString("B")
+</MudText>
+<MudText Class="mb-4">
+    P: @guid.ToString("P")
+</MudText>
+<MudText Class="mb-4">
+    X: @guid.ToString("X")
+</MudText>
+
+<MudText Typo="Typo.h4">
+    Upper Cases
+</MudText>
+<MudText Class="mb-4">
+    N: @guid.ToString("N").ToUpperInvariant()
+</MudText>
+<MudText Class="mb-4">
+    D: @guid.ToString("D").ToUpperInvariant()
+</MudText>
+<MudText Class="mb-4">
+    B: @guid.ToString("B").ToUpperInvariant()
+</MudText>
+<MudText Class="mb-4">
+    P: @guid.ToString("P").ToUpperInvariant()
+</MudText>
+<MudText Class="mb-4">
+    X: @guid.ToString("X").ToUpperInvariant()
+</MudText>
+
+<MudText Typo="Typo.h4">
+    Byte Array Form
+</MudText>
+<MudText Class="mb-4">
+    Array: @guid.ToByteArray().ArrayToString()
+</MudText>
+<MudText Class="mb-4">
+    Base64: @guid.ToByteArray().ToBase64String()
+</MudText>
+<MudText Class="mb-4">
+    Hex: @guid.ToByteArray().ToHexString()
+</MudText>
+
+
+@code {
+    private Guid guid = Guid.Empty;
+
+    private void GenerateNewGuid()
+    {
+        this.guid = Guid.NewGuid();
+    }
+}
