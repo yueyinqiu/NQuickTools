@@ -2,5 +2,46 @@
 
 <PageTitle>NQuickTools</PageTitle>
 
-<MudText Typo="Typo.h1">Hello, world!</MudText>
-<MudLink Href="/tools/f6baac39">GUID GEN</MudLink>
+<h1>Welcome to <a href="https://tools.nololiyt.top/">NQuickTools</a>!</h1>
+
+<div>
+    <p>
+        NQuickTools is a blazor web assembly project without any backend servers.
+        <br />
+        All of the tools will run on your computer and nothing will be uploaded.
+    </p>
+    <p>
+        This project is open source. Codes could be found at <a href="https://github.com/yueyinqiu/NQuickTools.git" target="_blank">github.com</a>.
+        <br />
+        If you have any new ideas or have found any bugs, feel free to contact us at <a href="https://github.com/yueyinqiu/NQuickTools/issues" target="_blank">github.com (issues)</a>.
+    </p>
+</div>
+
+<hr />
+
+<div>
+    Tips:
+    <ul>
+        <li>
+            Use Ctrl+F to search through the page (in most browsers).
+        </li>
+    </ul>
+</div>
+
+<hr />
+
+@inject ToolsProvider ToolsProvider
+<div>
+    Now the tools:
+    <ul id="toolList">
+        @foreach(var tool in ToolsProvider.EnumerateTools())
+        {
+            var hrefValue = $"tools/{tool.Id}";
+
+            <li>
+                <a href="@hrefValue">@tool.Name</a>:
+                @tool.Description
+            </li>
+        }
+    </ul>
+</div>

@@ -1,0 +1,36 @@
+﻿@page "/tools/{ToolId:guid}"
+
+<PageTitle>@tool?.Name - NQuickTools</PageTitle>
+
+<div>
+    <h1>
+        @tool?.Name
+    </h1>
+    <p>
+        @tool?.Description
+    </p>
+</div>
+
+<hr />
+
+<div>
+    <DynamicComponent Type="@tool?.ComponentType" />
+</div>
+
+@inject ToolsProvider ToolsProvider
+@inject NavigationManager NavigationManager
+@code
+{
+    private ToolInformation? tool;
+
+    [Parameter]
+    public Guid ToolId { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        if(!ToolsProvider.TryGetTool(ToolId, out tool))
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

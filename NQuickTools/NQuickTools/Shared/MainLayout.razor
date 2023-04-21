@@ -1,18 +1,15 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider />
+<main>
+    @Body
+</main>
 
-<MudLayout>
-    <MudAppBar Elevation="0">
-        <MudButton Color="Color.Inherit"
-                   Link="/" Target="_self"
-                   Style="text-transform: none">
-            NQuickTools
-        </MudButton>
-    </MudAppBar>
-    <MudMainContent>
-        <MudContainer>
-            @Body
-        </MudContainer>
-    </MudMainContent>
-</MudLayout>
+<footer>
+    <hr />
+    <div>
+        It's the footer!
+        <a href="">
+            Click to return back to index.
+        </a>
+    </div>
+</footer>

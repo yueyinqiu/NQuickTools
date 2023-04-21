@@ -2,13 +2,9 @@
   "name": "NQuickTools",
   "short_name": "NQuickTools",
   "start_url": "./",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#03173d",
-  "prefer_related_applications": false,
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "favicon.png",
       "type": "image/png",
       "sizes": "512x512"
     }
