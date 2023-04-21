@@ -50,17 +50,20 @@
 
     private static byte[]? ParseByteValueString(string bytesValueString)
     {
-        // about 4.57 characters per byte in average
-        var bytes = new List<byte>(bytesValueString.Length / 5);
-        foreach (var item in bytesValueString.Trim('[', ']').Split(','))
+        var sp = bytesValueString.Trim('[', ']').Split(',');
+        if(sp.Length == 1 && string.IsNullOrWhiteSpace(sp[0]))
+            return Array.Empty<byte>();
+
+        var bytes = new byte[sp.Length];
+        for(int i = 0; i < sp.Length; i++)
         {
-            if (!byte.TryParse(item, out var b))
+            if (!byte.TryParse(sp[i], out var b))
             {
                 return null;
             }
-            bytes.Add(b);
+            bytes[i] = b;
         }
-        return bytes.ToArray();
+        return bytes;
     }
 
     private void ToBase64()
