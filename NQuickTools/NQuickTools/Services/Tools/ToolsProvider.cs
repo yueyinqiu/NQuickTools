@@ -11,6 +11,10 @@ namespace NQuickTools.Services.Tools
                 "Guid Generator",
                 "Generate GUIDs.",
                 typeof(GuidGenerator)),
+            new (Guid.Parse("5c699749-dc52-43e2-ab3a-0200fec7fdd1"),
+                "Base64 - Bytes Converter",
+                "Convert between base64 strings and byte arrays (or files).",
+                typeof(Base64BytesConverter)),
         };
 
         private static readonly Dictionary<Guid, ToolInformation> toolDictionary;

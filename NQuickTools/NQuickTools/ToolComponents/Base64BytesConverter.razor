@@ -1,0 +1,109 @@
+﻿<div>
+    Base64:
+    <InputText @bind-Value="base64Value" />
+    <button @onclick="ToBytes">To Bytes</button>
+    <br />
+    Bytes:
+    <InputText @bind-Value="BindingBytesValueString" />
+    <button @onclick="ToBase64">To Base64</button>
+</div>
+
+<div>
+    Load Bytes From File:
+    <InputFile OnChange="LoadFile" />
+    <br />
+    Save Bytes As File:
+    <InputText @bind-Value="saveFileName"></InputText>
+    <button @onclick="SaveFileAsync">Save</button>
+    <br />
+    @savePrompt
+</div>
+
+@inject Downloader Downloader
+@code
+{
+    private string base64Value = "aGVsbG8=";
+
+    private byte[]? bytesValue;
+    private string bytesValueString = "[104, 101, 108, 108, 111]";
+    private string BindingBytesValueString
+    {
+        get => bytesValueString;
+        set
+        {
+            bytesValue = null;
+            this.bytesValueString = value;
+        }
+    }
+
+    private void ToBytes()
+    {
+        if (!base64Value.Base64TryToBytes(out var array))
+        {
+            bytesValueString = "<Invalid Base64>";
+            return;
+        }
+
+        bytesValueString = array.ArrayToString();
+        bytesValue = array;
+    }
+
+    private static byte[]? ParseByteValueString(string bytesValueString)
+    {
+        // about 4.57 characters per byte in average
+        var bytes = new List<byte>(bytesValueString.Length / 5);
+        foreach (var item in bytesValueString.Trim('[', ']').Split(','))
+        {
+            if (!byte.TryParse(item, out var b))
+            {
+                return null;
+            }
+            bytes.Add(b);
+        }
+        return bytes.ToArray();
+    }
+
+    private void ToBase64()
+    {
+        if (bytesValue == null)
+            bytesValue = ParseByteValueString(bytesValueString);
+
+        if (bytesValue == null)
+        {
+            base64Value = "<Invalid Bytes>";
+            return;
+        }
+
+        base64Value = Convert.ToBase64String(bytesValue);
+    }
+
+    private async Task LoadFile(InputFileChangeEventArgs e)
+    {
+        using var stream = e.File.OpenReadStream();
+        var bytes = await stream.ToArrayAsync();
+
+        this.bytesValueString = bytes.ArrayToString();
+        bytesValue = bytes;
+    }
+
+    private string saveFileName = "FromBase64.txt";
+    private string savePrompt = "";
+    private async Task SaveFileAsync()
+    {
+        savePrompt = "";
+
+        if (bytesValue == null)
+            bytesValue = ParseByteValueString(bytesValueString);
+
+        if (bytesValue == null)
+        {
+            savePrompt = $"{DateTime.Now:mm:ss:ff}: Invalid Bytes";
+            return;
+        }
+
+        if (string.IsNullOrEmpty(saveFileName))
+            saveFileName = "FromBase64.txt";
+
+        await Downloader.DownloadFromStream(bytesValue, saveFileName);
+    }
+}

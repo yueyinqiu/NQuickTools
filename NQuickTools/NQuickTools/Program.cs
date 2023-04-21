@@ -1,3 +1,4 @@
+using FileDownloader;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using NQuickTools;
@@ -8,5 +9,6 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped<ToolsProvider>();
+builder.Services.AddFileDownloder();
 
 await builder.Build().RunAsync();
